@@ -21,7 +21,7 @@ public class AllCreativeModeTabs {
     public static final RegistryObject<CreativeModeTab> MAIN_TAB = TAB_REGISTER.register("main",
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.createjet.main"))
-                    .icon(AllBlocks.TEST::asStack)
+                    .icon(AllBlocks.COMPRESSOR::asStack)
                     .displayItems((pParameters, pOutput) -> {
                         for (RegistryEntry<Block> entry : CreateJetEngine.REGISTRATE.getAll(Registries.BLOCK)) {
                             pOutput.accept(entry.get());

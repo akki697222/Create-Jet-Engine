@@ -24,6 +24,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+import static net.akki697222.createjetengine.content.kinetics.jetengines.turbojet.CombustionChamberBlock.COMPRESSED_AIR;
 import static net.akki697222.createjetengine.content.kinetics.jetengines.turbojet.CombustionChamberBlock.TEMPERATURE;
 
 public class CombustionChamberBlockEntity extends KineticBlockEntity {
@@ -71,12 +72,12 @@ public class CombustionChamberBlockEntity extends KineticBlockEntity {
     private int tankFluidAmount = 0;
     private String tankFluidName;
     public int temperature = 0;
+    public boolean ifAirSupply = false;
     @Override
     public void tick() {
         super.tick();
         tankFluidAmount = tank.getPrimaryHandler().getFluid().getAmount();
         tankFluidName = tank.getPrimaryHandler().getFluid().getDisplayName().getString();
-        CreateJetEngine.LOGGER.debug(tankFluidName);
         Direction facing = level.getBlockState(worldPosition).getValue(GasTurbineBlock.FACING);
         BlockPos frontPos = worldPosition.relative(facing);
         BlockPos backPos = worldPosition.relative(facing.getOpposite());
@@ -84,17 +85,28 @@ public class CombustionChamberBlockEntity extends KineticBlockEntity {
         Block frontBlock = level.getBlockState(frontPos).getBlock();
         Block backBlock = level.getBlockState(backPos).getBlock();
 
-
-        if (frontBlock == AllBlocks.GAS_TURBINE.get() || backBlock == AllBlocks.GAS_TURBINE.get()) {
+        if (tank.getPrimaryHandler().getFluidAmount() != 0) {
+            reduceTankFluid(1);
+        }
+        if (frontBlock == AllBlocks.GAS_TURBINE.get()) {
             if (tank.getPrimaryHandler().getFluidAmount() != 0 && temperature < 600) {
-                reduceTankFluid(1);
+                temperature++; temperature++;
+            }
+        } else if (backBlock == AllBlocks.GAS_TURBINE.get()) {
+            if (tank.getPrimaryHandler().getFluidAmount() != 0 && temperature < 600) {
                 temperature++; temperature++;
             }
         } else {
             if (tank.getPrimaryHandler().getFluidAmount() != 0) {
-                reduceTankFluid(1);
                 temperature++; temperature++;
             }
+        }
+        if (frontBlock == AllBlocks.COMPRESSOR.get()) {
+            ifAirSupply = true;
+        } else if (backBlock == AllBlocks.COMPRESSOR.get()) {
+            ifAirSupply = true;
+        } else {
+            ifAirSupply = false;
         }
 
         BlockPos changePos = new BlockPos(worldPosition.getX(), worldPosition.getY(), worldPosition.getZ());
@@ -102,6 +114,7 @@ public class CombustionChamberBlockEntity extends KineticBlockEntity {
             level.explode(null, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), 5, Level.ExplosionInteraction.BLOCK);
         } else {
             level.setBlock(changePos, level.getBlockState(changePos).setValue(TEMPERATURE, temperature), 3);
+            level.setBlock(changePos, level.getBlockState(changePos).setValue(COMPRESSED_AIR, ifAirSupply), 3);
             if (temperature > 0 && tankFluidAmount == 0) {
                 temperature--;
             }

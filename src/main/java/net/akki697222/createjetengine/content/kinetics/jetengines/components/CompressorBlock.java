@@ -7,12 +7,19 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 
 public class CompressorBlock extends DirectionalKineticBlock implements IBE<CompressorBlockEntity> {
+
+    public static final BooleanProperty COMPRESSED_AIR = BooleanProperty.create("compressed_air");
     public CompressorBlock(Properties properties) {
         super(properties);
+        this.registerDefaultState(this.stateDefinition.any()
+                .setValue(COMPRESSED_AIR, false));
     }
 
     @Override
@@ -42,5 +49,11 @@ public class CompressorBlock extends DirectionalKineticBlock implements IBE<Comp
     public boolean hasShaftTowards(LevelReader world, BlockPos pos, BlockState state, Direction face) {
         Direction facing = state.getValue(FACING);
         return face == facing || face == facing.getOpposite();
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(COMPRESSED_AIR);
+        super.createBlockStateDefinition(builder);
     }
 }

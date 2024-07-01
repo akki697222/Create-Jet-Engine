@@ -36,12 +36,15 @@ public class CombustionChamberBlock extends DirectionalKineticBlock implements I
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
 
     public static final BooleanProperty REBURNING = BooleanProperty.create("reburning");
+
+    public static final BooleanProperty COMPRESSED_AIR = BooleanProperty.create("compressed_air");
     public CombustionChamberBlock(Properties properties) {
         super(properties);
 
         this.registerDefaultState(this.stateDefinition.any()
                     .setValue(TEMPERATURE, 20)
                     .setValue(POWERED, false)
+                    .setValue(COMPRESSED_AIR, false)
                     .setValue(REBURNING, false));
 
     }
@@ -103,7 +106,7 @@ public class CombustionChamberBlock extends DirectionalKineticBlock implements I
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(TEMPERATURE, POWERED, REBURNING);
+        builder.add(TEMPERATURE, POWERED, REBURNING, COMPRESSED_AIR);
         super.createBlockStateDefinition(builder);
     }
 }

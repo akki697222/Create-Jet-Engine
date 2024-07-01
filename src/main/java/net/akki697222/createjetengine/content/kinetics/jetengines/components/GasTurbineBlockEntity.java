@@ -9,16 +9,19 @@ import net.akki697222.createjetengine.register.AllBlocks;
 import com.simibubi.create.content.kinetics.base.GeneratingKineticBlockEntity;
 import net.akki697222.createjetengine.CreateJetEngine;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.List;
 
 import static net.akki697222.createjetengine.content.kinetics.jetengines.components.GasTurbineBlock.POWERED;
+import static net.akki697222.createjetengine.content.kinetics.jetengines.turbojet.CombustionChamberBlock.COMPRESSED_AIR;
 import static net.akki697222.createjetengine.content.kinetics.jetengines.turbojet.CombustionChamberBlock.TEMPERATURE;
 
 public class GasTurbineBlockEntity extends GeneratingKineticBlockEntity {
@@ -26,6 +29,8 @@ public class GasTurbineBlockEntity extends GeneratingKineticBlockEntity {
 
     protected ScrollValueBehaviour generatedSpeed;
     private int temperatureBack;
+    private boolean airSupplyFront;
+    private boolean airSupplyBack;
     private boolean active = false;
     public GasTurbineBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -43,6 +48,8 @@ public class GasTurbineBlockEntity extends GeneratingKineticBlockEntity {
 
         temperatureFront = getTemperature(frontPos);
         temperatureBack = getTemperature(backPos);
+        airSupplyFront = getAirSupply(frontPos);
+        airSupplyBack = getAirSupply(backPos);
 
         if (t > 19) {
             //CreateJetEngine.LOGGER.debug("Front " + temperatureFront + " | Back " + temperatureBack);
@@ -50,30 +57,33 @@ public class GasTurbineBlockEntity extends GeneratingKineticBlockEntity {
         }
         if (temperatureFront != 0) {
             if (!active) {
-                if (temperatureFront > 299) {
+                if (temperatureFront > 299 && airSupplyFront) {
                     active = true;
-                    generatedSpeed.value = (temperatureFront / 256) * 100;
+                    generatedSpeed.value = temperatureBack / 256 * 100;
                     updateGeneratedRotation();
                 }
             } else {
-                if(temperatureFront < 100 || getBlockState().getValue(GasTurbineBlock.POWERED)) {
+                if(temperatureFront < 300 || getBlockState().getValue(GasTurbineBlock.POWERED)) {
                     active = false;
                     updateGeneratedRotation();
                 }
             }
         } else if (temperatureBack != 0) {
             if (!active) {
-                if (temperatureBack > 299) {
+                if (temperatureBack > 299 && airSupplyBack) {
                     active = true;
-                    generatedSpeed.value = (temperatureBack / 256) * 100;
+                    generatedSpeed.value = temperatureBack / 256 * 100;
                     updateGeneratedRotation();
                 }
             } else {
-                if(temperatureBack < 400 || getBlockState().getValue(GasTurbineBlock.POWERED)) {
+                if(temperatureBack < 300 || getBlockState().getValue(GasTurbineBlock.POWERED)) {
                     active = false;
                     updateGeneratedRotation();
                 }
             }
+        } else if (temperatureBack == 0 && temperatureFront == 0){
+            active = false;
+            updateGeneratedRotation();
         }
     }
 
@@ -86,8 +96,16 @@ public class GasTurbineBlockEntity extends GeneratingKineticBlockEntity {
             temp = temperatureBack;
         if (temperatureFront != 0)
             temp = temperatureFront;
+        String status;
+        if (active) {
+            status = I18n.get(CreateJetEngine.MODID + ".tooltip.status.active");
+        } else {
+            status = I18n.get(CreateJetEngine.MODID + ".tooltip.status.disable");
+        }
         tooltip.add(Component.literal(spacing).append(Component.literal(temp + "°C ")
                 .withStyle(ChatFormatting.AQUA)).append(Component.translatable(CreateJetEngine.MODID + ".tooltip.exhaust_temp").withStyle(ChatFormatting.DARK_GRAY)));
+        tooltip.add(Component.literal(spacing).append(Component.literal(status + " ")
+                .withStyle(ChatFormatting.AQUA)).append(Component.translatable(CreateJetEngine.MODID + ".tooltip.status").withStyle(ChatFormatting.DARK_GRAY)));
         return true;
     }
 
@@ -119,6 +137,13 @@ public class GasTurbineBlockEntity extends GeneratingKineticBlockEntity {
             return state.getValue(TEMPERATURE);
         }
         return 0;
+    }
+    private boolean getAirSupply(BlockPos pos) {
+        BlockState state = level.getBlockState(pos);
+        if (state.hasProperty(COMPRESSED_AIR)) {
+            return state.getValue(COMPRESSED_AIR);
+        }
+        return false;
     }
     public void updateGeneratedRotation() {
         super.updateGeneratedRotation();
