@@ -9,8 +9,10 @@ import net.akki697222.createjetengine.CreateJetEngine;
 import net.akki697222.createjetengine.content.kinetics.jetengines.components.GasTurbineBlock;
 import net.akki697222.createjetengine.register.AllBlocks;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
@@ -59,7 +61,7 @@ public class CombustionChamberBlockEntity extends KineticBlockEntity {
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         super.addToGoggleTooltip(tooltip, isPlayerSneaking);
-        tooltip.add(Component.literal(spacing).append(Component.translatable(CreateJetEngine.MODID + ".tooltip.combustion_chamber").withStyle(ChatFormatting.GRAY)));
+        tooltip.add(Component.literal(spacing).append(Component.translatable(CreateJetEngine.MODID + ".tooltip.combustion_chamber").withStyle(ChatFormatting.WHITE)));
         tooltip.add(Component.literal(spacing).append(Component.literal(temperature + "°C ")
                 .withStyle(ChatFormatting.AQUA)).append(Component.translatable(CreateJetEngine.MODID + ".tooltip.chamber_temp").withStyle(ChatFormatting.DARK_GRAY)));
         tooltip.add(Component.literal(spacing).append(Component.literal(tankFluidAmount + "mb " + tankFluidName + " ")
@@ -77,7 +79,12 @@ public class CombustionChamberBlockEntity extends KineticBlockEntity {
     public void tick() {
         super.tick();
         tankFluidAmount = tank.getPrimaryHandler().getFluid().getAmount();
-        tankFluidName = tank.getPrimaryHandler().getFluid().getDisplayName().getString();
+        if (tank.getPrimaryHandler().getFluid().getFluid().getFluidType().isAir()) {
+            tankFluidName = I18n.get(CreateJetEngine.MODID + ".tooltip.noFuel");
+        } else {
+            tankFluidName = tank.getPrimaryHandler().getFluid().getDisplayName().getString();
+        }
+
         Direction facing = level.getBlockState(worldPosition).getValue(GasTurbineBlock.FACING);
         BlockPos frontPos = worldPosition.relative(facing);
         BlockPos backPos = worldPosition.relative(facing.getOpposite());
@@ -111,7 +118,7 @@ public class CombustionChamberBlockEntity extends KineticBlockEntity {
 
         BlockPos changePos = new BlockPos(worldPosition.getX(), worldPosition.getY(), worldPosition.getZ());
         if (temperature > 999) {
-            level.explode(null, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), 5, Level.ExplosionInteraction.BLOCK);
+            level.explode(null, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), 10, Level.ExplosionInteraction.BLOCK);
         } else {
             level.setBlock(changePos, level.getBlockState(changePos).setValue(TEMPERATURE, temperature), 3);
             level.setBlock(changePos, level.getBlockState(changePos).setValue(COMPRESSED_AIR, ifAirSupply), 3);

@@ -12,13 +12,16 @@ public class AllConfigs {
     public static final ForgeConfigSpec CONFIG;
     private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
     public static final ForgeConfigSpec.DoubleValue AFTERBURNERED_ENGINE_MULTIPLIER;
-
+    public static final ForgeConfigSpec.IntValue FUEL_TANK_AMOUNT;
     static {
         BUILDER.push("General");
 
         AFTERBURNERED_ENGINE_MULTIPLIER = BUILDER
                 .comment("Afterburnered JET Engine generate speed multiplier")
                 .defineInRange("afterburnered_engine_multiplier", 1.0, 0.0, Double.MAX_VALUE);
+        FUEL_TANK_AMOUNT = BUILDER
+                .comment("Combustion Chamber Fuel Tank Max Amount")
+                .defineInRange("fuel_tank_amount", 1000, 1000, Integer.MAX_VALUE);
 
         BUILDER.pop();
 

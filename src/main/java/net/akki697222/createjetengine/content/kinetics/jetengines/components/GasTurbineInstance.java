@@ -25,7 +25,7 @@ public class GasTurbineInstance extends KineticBlockEntityInstance<GasTurbineBlo
 
         opposite = direction.getOpposite();
         shaft = getRotatingMaterial().getModel(AllPartialModels.SHAFT, blockState, opposite).createInstance();
-        shaft_half = getRotatingMaterial().getModel(com.simibubi.create.AllPartialModels.SHAFT_HALF, blockState, Direction.UP).createInstance();
+        shaft_half = getRotatingMaterial().getModel(AllPartialModels.SHAFT_HALF_UP, blockState, Direction.UP).createInstance();
 
         compressor_blade = materialManager.defaultCutout()
                 .material(AllMaterialSpecs.ROTATING)

@@ -90,7 +90,7 @@ public class GasTurbineBlockEntity extends GeneratingKineticBlockEntity {
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         super.addToGoggleTooltip(tooltip, isPlayerSneaking);
-        tooltip.add(Component.literal(spacing).append(Component.translatable(CreateJetEngine.MODID + ".tooltip.jet_engine").withStyle(ChatFormatting.GRAY)));
+        tooltip.add(Component.literal(spacing).append(Component.translatable(CreateJetEngine.MODID + ".tooltip.jet_engine").withStyle(ChatFormatting.WHITE)));
         int temp = 0;
         if (temperatureBack != 0)
             temp = temperatureBack;

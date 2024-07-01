@@ -11,7 +11,7 @@
 		{
 			"name": "Side",
 			"from": [0, 0, 0],
-			"to": [16, 10, 16],
+			"to": [16, 9, 16],
 			"faces": {
 				"north": {"uv": [10.5, 2.5, 6.5, 5], "rotation": 180, "texture": "#1"},
 				"east": {"uv": [4, 0, 6.5, 4], "rotation": 270, "texture": "#1"},
@@ -23,7 +23,7 @@
 		},
 		{
 			"name": "Top",
-			"from": [1, 10, 1],
+			"from": [1, 9, 1],
 			"to": [15, 12, 15],
 			"faces": {
 				"north": {"uv": [15, 1, 8, 2], "rotation": 180, "texture": "#0"},

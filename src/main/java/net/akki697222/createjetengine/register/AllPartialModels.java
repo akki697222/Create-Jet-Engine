@@ -13,7 +13,8 @@ public class AllPartialModels {
             JET_ENGINE_NOSE_CORN_LONG = block("jet_engine_parts/nosecone_long"),
 
             COMPRESSOR_BLADE = block("compressor_blades/blade"),
-            SHAFT = block("shaft")
+            SHAFT = block("shaft"),
+            SHAFT_HALF_UP = block("shaft_half_up")
     ;
 
     private static PartialModel block(String path) {
