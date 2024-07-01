@@ -1,7 +1,7 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "craete:block/andesite_block"
+		"0": "create:block/andesite_block"
 	},
 	"elements": [
 		{

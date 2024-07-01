@@ -9,6 +9,7 @@ import net.akki697222.createjetengine.content.kinetics.jetengines.components.Air
 import net.akki697222.createjetengine.content.kinetics.jetengines.components.CompressorBlock;
 import net.akki697222.createjetengine.content.kinetics.jetengines.components.GasTurbineBlock;
 import net.akki697222.createjetengine.content.kinetics.jetengines.turbojet.CombustionChamberBlock;
+import net.akki697222.createjetengine.content.kinetics.jetengines.turbojet.ExhaustNozzleBlock;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -22,6 +23,16 @@ public class AllBlocks {
 
     public static final BlockEntry<AirIntakeBlock> AIR_INTAKE = REGISTRATE.block("air_intake", AirIntakeBlock::new)
         .initialProperties(SharedProperties::stone)
+            .properties(p -> p.mapColor(MapColor.PODZOL))
+            .blockstate(BlockStateGen.directionalBlockProvider(true))
+            .addLayer(() -> RenderType::cutoutMipped)
+            .transform(axeOrPickaxe())
+            .transform(BlockStressDefaults.setImpact(1.0))
+            .item()
+            .transform(customItemModel())
+            .register();
+    public static final BlockEntry<ExhaustNozzleBlock> EXHAUST_NOZZLE = REGISTRATE.block("exhaust_nozzle", ExhaustNozzleBlock::new)
+            .initialProperties(SharedProperties::stone)
             .properties(p -> p.mapColor(MapColor.PODZOL))
             .blockstate(BlockStateGen.directionalBlockProvider(true))
             .addLayer(() -> RenderType::cutoutMipped)

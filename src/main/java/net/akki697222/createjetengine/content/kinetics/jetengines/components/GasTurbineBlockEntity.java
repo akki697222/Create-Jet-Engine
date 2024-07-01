@@ -59,7 +59,7 @@ public class GasTurbineBlockEntity extends GeneratingKineticBlockEntity {
             if (!active) {
                 if (temperatureFront > 299 && airSupplyFront) {
                     active = true;
-                    generatedSpeed.value = temperatureBack / 256 * 100;
+                    generatedSpeed.value = -256;
                     updateGeneratedRotation();
                 }
             } else {
@@ -72,7 +72,7 @@ public class GasTurbineBlockEntity extends GeneratingKineticBlockEntity {
             if (!active) {
                 if (temperatureBack > 299 && airSupplyBack) {
                     active = true;
-                    generatedSpeed.value = temperatureBack / 256 * 100;
+                    generatedSpeed.value = -256;
                     updateGeneratedRotation();
                 }
             } else {

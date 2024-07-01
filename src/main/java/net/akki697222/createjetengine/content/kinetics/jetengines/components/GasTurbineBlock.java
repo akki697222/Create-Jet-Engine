@@ -41,7 +41,7 @@ public class GasTurbineBlock extends DirectionalKineticBlock implements IBE<GasT
     @Override
     public boolean hasShaftTowards(LevelReader world, BlockPos pos, BlockState state, Direction face) {
         Direction facing = state.getValue(FACING);
-        return face == facing || face == facing.getOpposite();
+        return face == facing || face == facing.getOpposite() || face == Direction.UP;
     }
 
     @Override

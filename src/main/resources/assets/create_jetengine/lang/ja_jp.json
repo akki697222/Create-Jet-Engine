@@ -5,6 +5,7 @@
   "block.create_jetengine.compressor": "コンプレッサー",
   "block.create_jetengine.combustion_chamber": "燃焼チャンバー",
   "block.create_jetengine.gas_turbine": "ガスタービン",
+  "block.create_jetengine.exhaust_nozzle": "排気ノズル",
   "create_jetengine.tooltip.jet_engine": "ジェットエンジン",
   "create_jetengine.tooltip.exhaust_temp": "排気温度",
   "create_jetengine.tooltip.combustion_chamber": "燃焼チャンバー",

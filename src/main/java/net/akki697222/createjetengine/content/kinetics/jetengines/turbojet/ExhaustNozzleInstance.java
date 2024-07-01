@@ -1,10 +1,10 @@
-package net.akki697222.createjetengine.content.kinetics.jetengines.components;
+package net.akki697222.createjetengine.content.kinetics.jetengines.turbojet;
 
 import com.jozufozu.flywheel.api.MaterialManager;
-import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityInstance;
 import com.simibubi.create.content.kinetics.base.flwdata.RotatingData;
 import com.simibubi.create.foundation.render.AllMaterialSpecs;
+import net.akki697222.createjetengine.content.kinetics.jetengines.components.AirIntakeBlockEntity;
 import net.akki697222.createjetengine.register.AllPartialModels;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -12,31 +12,38 @@ import net.minecraft.util.Mth;
 
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.FACING;
 
-public class GasTurbineInstance extends KineticBlockEntityInstance<GasTurbineBlockEntity> {
-    protected final RotatingData compressor_blade;
+public class ExhaustNozzleInstance extends KineticBlockEntityInstance<ExhaustNozzleBlockEntity> {
     protected final RotatingData shaft;
-    protected final RotatingData shaft_half;
+    protected final RotatingData fan;
+
+    protected final RotatingData nose;
     final Direction direction;
     private final Direction opposite;
-    public GasTurbineInstance(MaterialManager materialManager, GasTurbineBlockEntity blockEntity) {
+
+    public ExhaustNozzleInstance(MaterialManager materialManager, ExhaustNozzleBlockEntity blockEntity) {
         super(materialManager, blockEntity);
 
         direction = blockState.getValue(FACING);
 
         opposite = direction.getOpposite();
-        shaft = getRotatingMaterial().getModel(AllPartialModels.SHAFT, blockState, opposite).createInstance();
-        shaft_half = getRotatingMaterial().getModel(com.simibubi.create.AllPartialModels.SHAFT_HALF, blockState, Direction.UP).createInstance();
-
-        compressor_blade = materialManager.defaultCutout()
+        shaft = getRotatingMaterial().getModel(com.simibubi.create.AllPartialModels.SHAFT_HALF, blockState, opposite).createInstance();
+        fan = materialManager.defaultCutout()
                 .material(AllMaterialSpecs.ROTATING)
-                .getModel(AllPartialModels.COMPRESSOR_BLADE, blockState, opposite)
+                .getModel(AllPartialModels.JET_ENGINE_FAN_EIGHT_BLADE, blockState, opposite)
                 .createInstance();
-        setup(compressor_blade, getSpeed());
-        setup(shaft, getSpeed());
-        setup(shaft_half, getSpeed());
+
+        nose = materialManager.defaultCutout()
+                .material(AllMaterialSpecs.ROTATING)
+                .getModel(AllPartialModels.JET_ENGINE_NOSE_CORN_LONG, blockState, opposite)
+                .createInstance();
+
+
+        setup(shaft);
+        setup(fan, getFanSpeed());
+        setup(nose, getFanSpeed());
     }
 
-    public float getSpeed() {
+    private float getFanSpeed() {
         float speed = blockEntity.getSpeed() * 5;
         if (speed > 0)
             speed = Mth.clamp(speed, 80, 64 * 20);
@@ -47,26 +54,25 @@ public class GasTurbineInstance extends KineticBlockEntityInstance<GasTurbineBlo
 
     @Override
     public void update() {
-        updateRotation(compressor_blade);
         updateRotation(shaft);
-        updateRotation(shaft_half);
+        updateRotation(fan, getFanSpeed());
+        updateRotation(nose, getFanSpeed());
     }
 
     @Override
     public void updateLight() {
         BlockPos behind = pos.relative(opposite);
-        BlockPos up = pos.relative(Direction.UP);
         relight(behind, shaft);
-        relight(up, shaft_half);
 
         BlockPos inFront = pos.relative(direction);
-        relight(inFront, compressor_blade);
+        relight(inFront, fan);
+        relight(inFront, nose);
     }
 
     @Override
-    protected void remove() {
-        compressor_blade.delete();
+    public void remove() {
         shaft.delete();
-        shaft_half.delete();
+        fan.delete();
+        nose.delete();
     }
 }

@@ -2,9 +2,7 @@ package net.akki697222.createjetengine.register;
 
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 import net.akki697222.createjetengine.content.kinetics.jetengines.components.*;
-import net.akki697222.createjetengine.content.kinetics.jetengines.turbojet.CombustionChamberBlockEntity;
-import net.akki697222.createjetengine.content.kinetics.jetengines.turbojet.CombustionChamberInstance;
-import net.akki697222.createjetengine.content.kinetics.jetengines.turbojet.CombustionChamberRenderer;
+import net.akki697222.createjetengine.content.kinetics.jetengines.turbojet.*;
 
 import static net.akki697222.createjetengine.CreateJetEngine.REGISTRATE;
 
@@ -14,6 +12,12 @@ public class AllBlockEntityTypes {
             .instance(() -> AirIntakeInstance::new, false)
             .validBlocks(AllBlocks.AIR_INTAKE)
             .renderer(() -> AirIntakeRenderer::new)
+            .register();
+    public static final BlockEntityEntry<ExhaustNozzleBlockEntity> EXHAUST_NOZZLE = REGISTRATE
+            .blockEntity("exhaust_nozzle", ExhaustNozzleBlockEntity::new)
+            .instance(() -> ExhaustNozzleInstance::new, false)
+            .validBlocks(AllBlocks.EXHAUST_NOZZLE)
+            .renderer(() -> ExhaustNozzleRenderer::new)
             .register();
     public static final BlockEntityEntry<CompressorBlockEntity> COMPRESSOR = REGISTRATE
             .blockEntity("compressor", CompressorBlockEntity::new)
