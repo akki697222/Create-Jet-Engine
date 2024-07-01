@@ -43,17 +43,8 @@ public class GasTurbineRenderer extends KineticBlockEntityRenderer<GasTurbineBlo
         int lightAbove = LevelRenderer.getLightColor(be.getLevel(), be.getBlockPos().above());
 
         SuperByteBuffer shaft = CachedBufferer.partialFacing(AllPartialModels.SHAFT, be.getBlockState(), direction.getOpposite());
-        SuperByteBuffer shaft_half = getRotatedModel(be, be.getBlockState());
+        SuperByteBuffer shaft_half = CachedBufferer.partialFacing(AllPartialModels.SHAFT_HALF_UP, be.getBlockState(), direction.getOpposite());
         SuperByteBuffer compressor_blade = CachedBufferer.partialFacing(AllPartialModels.COMPRESSOR_BLADE, be.getBlockState(), direction.getOpposite());
-
-        Direction.Axis rotationAxis;
-        if (direction == Direction.UP || direction == Direction.DOWN) {
-            rotationAxis = Direction.Axis.Y;
-        } else if (direction == Direction.NORTH || direction == Direction.SOUTH) {
-            rotationAxis = Direction.Axis.Z;
-        } else {
-            rotationAxis = Direction.Axis.X;
-        }
 
         float time = AnimationTickHolder.getRenderTime(be.getLevel());
         float speed = be.getSpeed();
@@ -61,12 +52,8 @@ public class GasTurbineRenderer extends KineticBlockEntityRenderer<GasTurbineBlo
         angle = angle / 180f * (float) Math.PI;
 
         standardKineticRotationTransform(shaft, be, lightBehind).renderInto(ms, vb);
-        kineticRotationTransform(shaft_half, be, Direction.Axis.Y, angle, lightAbove)
-                .translate(0, 1, 0)  // ブロックの上面に移動
-                .renderInto(ms, vb);
+        kineticRotationTransform(shaft_half, be, Direction.Axis.Y, angle, lightUp).renderInto(ms, vb);
         kineticRotationTransform(compressor_blade, be, direction.getAxis(), angle, lightBehind).renderInto(ms, vb);
     }
-    protected SuperByteBuffer getRotatedModel(GasTurbineBlockEntity be, BlockState state) {
-        return CachedBufferer.partialFacing(AllPartialModels.SHAFT_HALF_UP, state, Direction.UP);
-    }
+
 }
