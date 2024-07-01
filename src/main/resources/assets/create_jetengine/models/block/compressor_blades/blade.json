@@ -1,0 +1,63 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "create_jetengine:block/fan_six_blade",
+		"particle": "create_jetengine:block/fan_six_blade"
+	},
+	"elements": [
+		{
+			"name": "Fan",
+			"from": [1, 1, 8],
+			"to": [15, 15, 16],
+			"rotation": {"angle": 45, "axis": "z", "origin": [8, 8, 12]},
+			"faces": {
+				"north": {"uv": [1, 1, 15, 15], "texture": "#0"}
+			}
+		},
+		{
+			"name": "Fan",
+			"from": [1, 1, 7],
+			"to": [15, 15, 15],
+			"rotation": {"angle": 22.5, "axis": "z", "origin": [8, 8, 12]},
+			"faces": {
+				"south": {"uv": [1, 1, 15, 15], "texture": "#0"}
+			}
+		},
+		{
+			"name": "Fan",
+			"from": [1, 1, -7],
+			"to": [15, 15, 1],
+			"rotation": {"angle": -22.5, "axis": "z", "origin": [8, 8, 12]},
+			"faces": {
+				"south": {"uv": [1, 1, 15, 15], "rotation": 180, "texture": "#0"}
+			}
+		},
+		{
+			"name": "Fan",
+			"from": [1, 1, 0],
+			"to": [15, 15, 8],
+			"rotation": {"angle": -45, "axis": "z", "origin": [8, 8, 12]},
+			"faces": {
+				"south": {"uv": [1, 1, 15, 15], "rotation": 180, "texture": "#0"}
+			}
+		},
+		{
+			"name": "Fan",
+			"from": [1, 1, 15],
+			"to": [15, 15, 23],
+			"rotation": {"angle": 22.5, "axis": "z", "origin": [8, 8, 12]},
+			"faces": {
+				"north": {"uv": [1, 1, 15, 15], "texture": "#0"}
+			}
+		},
+		{
+			"name": "Fan",
+			"from": [1, 1, 1],
+			"to": [15, 15, 9],
+			"rotation": {"angle": -22.5, "axis": "z", "origin": [8, 8, 12]},
+			"faces": {
+				"north": {"uv": [1, 1, 15, 15], "rotation": 90, "texture": "#0"}
+			}
+		}
+	]
+}

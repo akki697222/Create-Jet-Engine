@@ -1,0 +1,13 @@
+{
+  "itemGroup.createjet.main": "Create Jet Engine",
+  "block.create_jetengine.air_intake": "エアインテーク",
+  "block.create_jetengine.test": "テスト用ブロック",
+  "block.create_jetengine.compressor": "コンプレッサー",
+  "block.create_jetengine.combustion_chamber": "燃焼チャンバー",
+  "block.create_jetengine.gas_turbine": "ガスタービン",
+  "create_jetengine.tooltip.jet_engine": "ジェットエンジン",
+  "create_jetengine.tooltip.exhaust_temp": "排気温度",
+  "create_jetengine.tooltip.combustion_chamber": "燃焼チャンバー",
+  "create_jetengine.tooltip.chamber_temp": "内部温度",
+  "create_jetengine.tooltip.chamber_fuel": "残燃料"
+}
