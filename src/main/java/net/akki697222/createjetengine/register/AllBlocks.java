@@ -62,11 +62,6 @@ public class AllBlocks {
             .item()
             .transform(customItemModel())
             .register();
-    public static final BlockEntry<Block> TEST = REGISTRATE.block("test", Block::new)
-            .initialProperties(() -> Blocks.STONE)
-            .properties(p -> p.mapColor(MapColor.STONE))
-            .simpleItem()
-            .register();
     public static void init() {}
 }
 
