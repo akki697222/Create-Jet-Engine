@@ -13,8 +13,6 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
-import net.minecraft.util.Mth;
-import net.minecraft.world.level.block.state.BlockState;
 
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.FACING;
 
@@ -39,7 +37,7 @@ public class GasTurbineRenderer extends KineticBlockEntityRenderer<GasTurbineBlo
 
         int lightBehind = LevelRenderer.getLightColor(be.getLevel(), be.getBlockPos().relative(direction.getOpposite()));
         int lightInFront = LevelRenderer.getLightColor(be.getLevel(), be.getBlockPos().relative(direction));
-        int lightUp = LevelRenderer.getLightColor(be.getLevel(), be.getBlockPos().relative(getVerticalDirection(direction, true)));
+        int lightUp = LevelRenderer.getLightColor(be.getLevel(), be.getBlockPos().relative(Direction.UP));
         int lightAbove = LevelRenderer.getLightColor(be.getLevel(), be.getBlockPos().above());
 
         SuperByteBuffer shaft = CachedBufferer.partialFacing(AllPartialModels.SHAFT, be.getBlockState(), direction.getOpposite());
@@ -52,7 +50,7 @@ public class GasTurbineRenderer extends KineticBlockEntityRenderer<GasTurbineBlo
         angle = angle / 180f * (float) Math.PI;
 
         standardKineticRotationTransform(shaft, be, lightBehind).renderInto(ms, vb);
-        kineticRotationTransform(shaft_half, be, Direction.Axis.Y, angle, lightUp).renderInto(ms, vb);
+        standardKineticRotationTransform(shaft_half, be, lightUp).renderInto(ms, vb);
         kineticRotationTransform(compressor_blade, be, direction.getAxis(), angle, lightBehind).renderInto(ms, vb);
     }
 

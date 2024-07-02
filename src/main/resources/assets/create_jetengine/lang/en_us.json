@@ -1,0 +1,17 @@
+{
+  "itemGroup.createjet.main": "Create Jet Engine",
+  "block.create_jetengine.air_intake": "Air Intake",
+  "block.create_jetengine.compressor": "Compressor",
+  "block.create_jetengine.combustion_chamber": "Combustion Chamber",
+  "block.create_jetengine.gas_turbine": "Gas Turbine",
+  "block.create_jetengine.exhaust_nozzle": "Exhaust Nozzle",
+  "create_jetengine.tooltip.jet_engine": "Jet Engine: ",
+  "create_jetengine.tooltip.exhaust_temp": "Exhaust gas temp",
+  "create_jetengine.tooltip.combustion_chamber": "Combustion Chamber:",
+  "create_jetengine.tooltip.noFuel": "No Fuel",
+  "create_jetengine.tooltip.chamber_fuel": "Remaining fuel",
+  "create_jetengine.tooltip.chamber_temp": "Chamber temp",
+  "create_jetengine.tooltip.status.active": "Active",
+  "create_jetengine.tooltip.status.disable": "Disable",
+  "create_jetengine.tooltip.status": "Status"
+}

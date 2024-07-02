@@ -13,6 +13,7 @@ import net.akki697222.createjetengine.content.kinetics.jetengines.turbojet.Exhau
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.material.MapColor;
 
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
@@ -43,7 +44,7 @@ public class AllBlocks {
             .register();
     public static final BlockEntry<CompressorBlock> COMPRESSOR = REGISTRATE.block("compressor", CompressorBlock::new)
             .initialProperties(SharedProperties::stone)
-            .properties(p -> p.mapColor(MapColor.PODZOL))
+            .properties(p -> p.mapColor(MapColor.PODZOL).sound(SoundType.NETHERITE_BLOCK))
             .blockstate(BlockStateGen.directionalBlockProvider(true))
             .addLayer(() -> RenderType::cutoutMipped)
             .transform(axeOrPickaxe())
@@ -53,7 +54,7 @@ public class AllBlocks {
             .register();
     public static final BlockEntry<CombustionChamberBlock> COMBUSTION_CHAMBER = REGISTRATE.block("combustion_chamber", CombustionChamberBlock::new)
             .initialProperties(SharedProperties::stone)
-            .properties(p -> p.mapColor(MapColor.PODZOL))
+            .properties(p -> p.mapColor(MapColor.PODZOL).sound(SoundType.NETHERITE_BLOCK))
             .blockstate(BlockStateGen.directionalBlockProvider(true))
             .addLayer(() -> RenderType::cutoutMipped)
             .transform(axeOrPickaxe())
@@ -63,7 +64,7 @@ public class AllBlocks {
             .register();
     public static final BlockEntry<GasTurbineBlock> GAS_TURBINE = REGISTRATE.block("gas_turbine", GasTurbineBlock::new)
             .initialProperties(SharedProperties::stone)
-            .properties(p -> p.mapColor(MapColor.PODZOL))
+            .properties(p -> p.mapColor(MapColor.PODZOL).sound(SoundType.NETHERITE_BLOCK))
             .blockstate(BlockStateGen.directionalBlockProvider(true))
             .addLayer(() -> RenderType::cutoutMipped)
             .transform(BlockStressDefaults.setCapacity(16384/256f))

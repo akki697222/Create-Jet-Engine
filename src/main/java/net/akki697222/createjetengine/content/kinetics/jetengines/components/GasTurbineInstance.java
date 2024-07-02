@@ -1,5 +1,6 @@
 package net.akki697222.createjetengine.content.kinetics.jetengines.components;
 
+import com.jozufozu.flywheel.api.Instancer;
 import com.jozufozu.flywheel.api.MaterialManager;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityInstance;
@@ -9,6 +10,9 @@ import net.akki697222.createjetengine.register.AllPartialModels;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.FACING;
 
@@ -25,7 +29,7 @@ public class GasTurbineInstance extends KineticBlockEntityInstance<GasTurbineBlo
 
         opposite = direction.getOpposite();
         shaft = getRotatingMaterial().getModel(AllPartialModels.SHAFT, blockState, opposite).createInstance();
-        shaft_half = getRotatingMaterial().getModel(AllPartialModels.SHAFT_HALF_UP, blockState, Direction.UP).createInstance();
+        shaft_half = getRotatingMaterial().getModel(AllPartialModels.SHAFT_HALF_UP, blockState, direction).createInstance();
 
         compressor_blade = materialManager.defaultCutout()
                 .material(AllMaterialSpecs.ROTATING)
