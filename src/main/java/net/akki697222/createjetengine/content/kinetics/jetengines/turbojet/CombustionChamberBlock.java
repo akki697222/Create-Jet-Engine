@@ -26,8 +26,11 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
+
+import static net.minecraft.world.item.Items.LAVA_BUCKET;
 
 public class CombustionChamberBlock extends DirectionalKineticBlock implements IBE<CombustionChamberBlockEntity> {
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
@@ -66,6 +69,8 @@ public class CombustionChamberBlock extends DirectionalKineticBlock implements I
             if (itemInHand.getItem() instanceof BucketItem bucketItem) {
                 if (!tank.getFluidInTank(0).isEmpty())
                     return InteractionResult.FAIL;
+                if (bucketItem.getFluid().getBucket() != LAVA_BUCKET)
+                    return InteractionResult.PASS;
                 tank.fill(new FluidStack(bucketItem.getFluid(), 1000), IFluidHandler.FluidAction.EXECUTE);
                 if (!player.isCreative())
                     player.setItemInHand(hand, new ItemStack(Items.BUCKET));

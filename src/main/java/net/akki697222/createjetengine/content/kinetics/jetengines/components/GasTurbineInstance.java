@@ -53,7 +53,7 @@ public class GasTurbineInstance extends KineticBlockEntityInstance<GasTurbineBlo
     public void update() {
         updateRotation(compressor_blade);
         updateRotation(shaft);
-        updateRotation(shaft_half);
+        updateRotation(shaft_half, Direction.Axis.Y);
     }
 
     @Override

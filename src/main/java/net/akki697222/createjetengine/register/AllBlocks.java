@@ -19,12 +19,10 @@ import net.minecraft.world.level.material.MapColor;
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
 import static com.simibubi.create.foundation.data.TagGen.axeOrPickaxe;
 import static net.akki697222.createjetengine.CreateJetEngine.REGISTRATE;
-
 public class AllBlocks {
-
     public static final BlockEntry<AirIntakeBlock> AIR_INTAKE = REGISTRATE.block("air_intake", AirIntakeBlock::new)
         .initialProperties(SharedProperties::stone)
-            .properties(p -> p.mapColor(MapColor.PODZOL))
+            .properties(p -> p.mapColor(MapColor.PODZOL).sound(SoundType.METAL))
             .blockstate(BlockStateGen.directionalBlockProvider(true))
             .addLayer(() -> RenderType::cutoutMipped)
             .transform(axeOrPickaxe())
@@ -34,7 +32,7 @@ public class AllBlocks {
             .register();
     public static final BlockEntry<ExhaustNozzleBlock> EXHAUST_NOZZLE = REGISTRATE.block("exhaust_nozzle", ExhaustNozzleBlock::new)
             .initialProperties(SharedProperties::stone)
-            .properties(p -> p.mapColor(MapColor.PODZOL))
+            .properties(p -> p.mapColor(MapColor.PODZOL).sound(SoundType.METAL))
             .blockstate(BlockStateGen.directionalBlockProvider(true))
             .addLayer(() -> RenderType::cutoutMipped)
             .transform(axeOrPickaxe())

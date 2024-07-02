@@ -1,20 +1,16 @@
 package net.akki697222.createjetengine.content.kinetics.jetengines.turbojet;
 
-import com.simibubi.create.Create;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
-import com.simibubi.create.foundation.blockEntity.behaviour.fluid.SmartFluidTankBehaviour;
 import com.simibubi.create.foundation.fluid.FluidHelper;
 import net.akki697222.createjetengine.CreateJetEngine;
 import net.akki697222.createjetengine.content.kinetics.jetengines.components.GasTurbineBlock;
 import net.akki697222.createjetengine.register.AllBlocks;
+import net.akki697222.createjetengine.system.FilteredFluidTankBehaviour;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -31,7 +27,7 @@ import static net.akki697222.createjetengine.content.kinetics.jetengines.turboje
 
 public class CombustionChamberBlockEntity extends KineticBlockEntity {
     private final BlockState state;
-    public SmartFluidTankBehaviour tank;
+    private FilteredFluidTankBehaviour tank;
     public CombustionChamberBlockEntity(BlockEntityType<?> typeIn, BlockPos pos, BlockState state) {
         super(typeIn, pos, state);
         this.state = state;
@@ -53,7 +49,7 @@ public class CombustionChamberBlockEntity extends KineticBlockEntity {
     @Override
     public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
 
-        tank = SmartFluidTankBehaviour.single(this, 1000);
+        tank = FilteredFluidTankBehaviour.single(this, 1000);
         behaviours.add(tank);
         super.addBehaviours(behaviours);
     }
@@ -64,7 +60,7 @@ public class CombustionChamberBlockEntity extends KineticBlockEntity {
         tooltip.add(Component.literal(spacing).append(Component.translatable(CreateJetEngine.MODID + ".tooltip.combustion_chamber").withStyle(ChatFormatting.WHITE)));
         tooltip.add(Component.literal(spacing).append(Component.literal(temperature + "°C ")
                 .withStyle(ChatFormatting.AQUA)).append(Component.translatable(CreateJetEngine.MODID + ".tooltip.chamber_temp").withStyle(ChatFormatting.DARK_GRAY)));
-        tooltip.add(Component.literal(spacing).append(Component.literal(tankFluidAmount + "mb " + tankFluidName + " ")
+        tooltip.add(Component.literal(spacing).append(Component.literal(tankFluidAmount + "mb ")
                 .withStyle(ChatFormatting.AQUA)).append(Component.translatable(CreateJetEngine.MODID + ".tooltip.chamber_fuel").withStyle(ChatFormatting.DARK_GRAY)));
         return true;
     }
@@ -72,7 +68,6 @@ public class CombustionChamberBlockEntity extends KineticBlockEntity {
         tank.getPrimaryHandler().setFluid(FluidHelper.copyStackWithAmount(tank.getPrimaryHandler().getFluid(), tank.getPrimaryHandler().getFluidAmount() - amount));
     }
     private int tankFluidAmount = 0;
-    private String tankFluidName;
     public int temperature = 0;
     public boolean ifAirSupply = false;
     @Override
@@ -80,9 +75,7 @@ public class CombustionChamberBlockEntity extends KineticBlockEntity {
         super.tick();
         tankFluidAmount = tank.getPrimaryHandler().getFluid().getAmount();
         if (tank.getPrimaryHandler().getFluid().getFluid().getFluidType().isAir()) {
-            tankFluidName = I18n.get(CreateJetEngine.MODID + ".tooltip.noFuel");
         } else {
-            tankFluidName = tank.getPrimaryHandler().getFluid().getDisplayName().getString();
         }
 
         Direction facing = level.getBlockState(worldPosition).getValue(GasTurbineBlock.FACING);
