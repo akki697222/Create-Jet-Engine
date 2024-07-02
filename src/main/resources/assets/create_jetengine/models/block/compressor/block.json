@@ -8,7 +8,7 @@
 		"6": "create_jetengine:block/compressor/fluid_tank_pipe",
 		"7": "create_jetengine:block/compressor/oil_tank",
 		"9": "create_jetengine:block/compressor/motor",
-		"particle": "create_jetengine:block/compressor/compressor_top_texture"
+		"particle": "create_jetengine:block/gas_turbine/gas_turbine_inner_pole"
 	},
 	"elements": [
 		{

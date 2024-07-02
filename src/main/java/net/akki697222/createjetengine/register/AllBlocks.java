@@ -68,7 +68,6 @@ public class AllBlocks {
             .transform(BlockStressDefaults.setCapacity(16384/256f))
             .transform(BlockStressDefaults.setGeneratorSpeed(() -> Couple.create(0, 256)))
             .transform(axeOrPickaxe())
-            .transform(BlockStressDefaults.setImpact(2))
             .item()
             .transform(customItemModel())
             .register();

@@ -6,7 +6,7 @@
 		"5": "create_jetengine:block/gas_turbine/gas_turbine",
 		"7": "create_jetengine:block/gas_turbine/gas_turbine_inner_pole",
 		"8": "create_jetengine:block/gas_turbine/gas_turbine_frame",
-		"particle": "create_jetengine:block/gas_turbine/gas_turbine_inner"
+		"particle": "create_jetengine:block/gas_turbine/gas_turbine_inner_pole"
 	},
 	"elements": [
 		{
