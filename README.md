@@ -11,5 +11,7 @@ This project is currently under construction and in the testing stage.
 The mod file not currently available.
 
 Downloads
+
 CurseForge: in preparation
+
 Modrinth: in preparation
