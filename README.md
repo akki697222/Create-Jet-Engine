@@ -10,7 +10,7 @@ This project is currently under construction and in the testing stage.
 
 The mod file not currently available.
 
-Downloads
+## Downloads
 
 CurseForge: in preparation
 
