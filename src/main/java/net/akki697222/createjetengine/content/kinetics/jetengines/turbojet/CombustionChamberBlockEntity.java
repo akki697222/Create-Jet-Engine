@@ -2,6 +2,7 @@ package net.akki697222.createjetengine.content.kinetics.jetengines.turbojet;
 
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
+import com.simibubi.create.foundation.blockEntity.behaviour.fluid.SmartFluidTankBehaviour;
 import com.simibubi.create.foundation.fluid.FluidHelper;
 import net.akki697222.createjetengine.CreateJetEngine;
 import net.akki697222.createjetengine.content.kinetics.jetengines.components.GasTurbineBlock;
@@ -15,9 +16,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.FluidStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -27,7 +30,7 @@ import static net.akki697222.createjetengine.content.kinetics.jetengines.turboje
 
 public class CombustionChamberBlockEntity extends KineticBlockEntity {
     private final BlockState state;
-    private FilteredFluidTankBehaviour tank;
+    private SmartFluidTankBehaviour tank;
     public CombustionChamberBlockEntity(BlockEntityType<?> typeIn, BlockPos pos, BlockState state) {
         super(typeIn, pos, state);
         this.state = state;
@@ -38,9 +41,9 @@ public class CombustionChamberBlockEntity extends KineticBlockEntity {
         if (cap == ForgeCapabilities.FLUID_HANDLER)
             return tank.getCapability().cast();
         else if(state.getValue(CombustionChamberBlock.FACING) == Direction.UP) {
-            if (cap == ForgeCapabilities.FLUID_HANDLER && side == Direction.NORTH)
+            if (cap == ForgeCapabilities.FLUID_HANDLER && side == Direction.UP)
                 return tank.getCapability().cast();
-            if (cap == ForgeCapabilities.FLUID_HANDLER && side == Direction.SOUTH)
+            if (cap == ForgeCapabilities.FLUID_HANDLER && side == Direction.UP)
                 return tank.getCapability().cast();
         }
         return super.getCapability(cap);
@@ -49,7 +52,7 @@ public class CombustionChamberBlockEntity extends KineticBlockEntity {
     @Override
     public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
 
-        tank = FilteredFluidTankBehaviour.single(this, 1000);
+        tank = SmartFluidTankBehaviour.single(this, 1000);
         behaviours.add(tank);
         super.addBehaviours(behaviours);
     }
@@ -73,10 +76,11 @@ public class CombustionChamberBlockEntity extends KineticBlockEntity {
     @Override
     public void tick() {
         super.tick();
+//        if (tank.getPrimaryHandler().getFluid().getFluid() != Fluids.LAVA) {
+//            tank.getPrimaryHandler().setFluid(FluidStack.EMPTY);
+//        }
+
         tankFluidAmount = tank.getPrimaryHandler().getFluid().getAmount();
-        if (tank.getPrimaryHandler().getFluid().getFluid().getFluidType().isAir()) {
-        } else {
-        }
 
         Direction facing = level.getBlockState(worldPosition).getValue(GasTurbineBlock.FACING);
         BlockPos frontPos = worldPosition.relative(facing);
