@@ -1,4 +1,4 @@
-# Create Jet Engine
+g# Create Jet Engine
 This is a Create Addon.
 
 Add Jet Engines to Create Mod.
@@ -15,3 +15,9 @@ The mod file not currently available.
 CurseForge: in preparation
 
 Modrinth: in preparation
+
+TODO:
+
+Drawing related fixes
+
+Fix gas turbine SU production amount
