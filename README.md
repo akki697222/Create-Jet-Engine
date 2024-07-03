@@ -12,7 +12,7 @@ The mod file not currently available.
 
 ## Downloads
 
-CurseForge: in preparation
+CurseForge: https://www.curseforge.com/minecraft/mc-mods/create-jet-engine
 
 Modrinth: in preparation
 
